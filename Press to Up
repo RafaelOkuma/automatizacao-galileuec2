@@ -1,0 +1,538 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "3ca00a35",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from selenium import webdriver\n",
+    "from webdriver_manager.chrome import ChromeDriverManager\n",
+    "from selenium.webdriver.chrome.service import Service\n",
+    "from selenium.webdriver.common.by import By\n",
+    "from selenium.common.exceptions import NoSuchElementException\n",
+    "import pandas as pd\n",
+    "\n",
+    "\n",
+    "servico = Service(ChromeDriverManager().install())\n",
+    "\n",
+    "navegador = webdriver.Chrome(service=servico)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "9580c4ab",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# passo de entrar no navegador\n",
+    "navegador.get(\"https://appgalileu.com.br/professor\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f3494404",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "login = input(\"Login\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "9cd00c74",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "senha = input(\"Senha\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "c1feac0c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# utilize copy xpath no inspecionar elemento\n",
+    "navegador.find_element('xpath', '//*[@id=\"identity\"]').send_keys(login)\n",
+    "\n",
+    "navegador.find_element('xpath', '//*[@id=\"credential\"]').send_keys(senha)\n",
+    "\n",
+    "navegador.find_element('xpath', '//*[@id=\"btn-acessar\"]').click()\n",
+    "\n",
+    "navegador.find_element('xpath', '/html/body/div[2]/div/div/div[2]/center/div[2]/div[2]/ul/li[2]/a').click()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "3c6aab99",
+   "metadata": {
+    "scrolled": false
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Nível de ensino:\n",
+      "\n",
+      " 2 para Ensino médio \n",
+      " 3 para Ensino Fundamental\n",
+      "\n",
+      "3\n"
+     ]
+    }
+   ],
+   "source": [
+    "nivel_ensino = input(\"Nível de ensino:\\n\\n 2 para Ensino médio \\n 3 para Ensino Fundamental\\n\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "80e2fe8d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# selecionando nível do Ensino\n",
+    "navegador.find_element('xpath', '//*[@id=\"id_curso\"]').click()\n",
+    "\n",
+    "# Construindo o XPath com a variável\n",
+    "xpath_nivel_ensino = f'//*[@id=\"id_curso\"]/option[{nivel_ensino}]'\n",
+    "\n",
+    "navegador.find_element('xpath', xpath_nivel_ensino).click()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "301d90e0",
+   "metadata": {},
+   "source": [
+    "Turma"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "cbb65993",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Turma:\n",
+      "\n",
+      " 2 para 8ºA ou 1ºA \n",
+      " 3 para 8ºB ou 1ºB \n",
+      " 4 para 9ºA \n",
+      " 5 para 9ºB \n",
+      " \n",
+      "2\n"
+     ]
+    }
+   ],
+   "source": [
+    "turma = input(\"Turma:\\n\\n 2 para 8ºA ou 1ºA \\n 3 para 8ºB ou 1ºB \\n 4 para 9ºA \\n 5 para 9ºB \\n \\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "6e5aabfe",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# selecionando nível do Ensino\n",
+    "navegador.find_element('xpath', '//*[@id=\"id_turma\"]').click()\n",
+    "\n",
+    "# Construindo o XPath com a variável\n",
+    "xpath_turma = f'//*[@id=\"id_turma\"]/option[{turma}]'\n",
+    "\n",
+    "navegador.find_element('xpath', xpath_turma).click()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "49c08e73",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Qual trimestre? \n",
+      "\n",
+      " 2 para o 1º Trimestre \n",
+      " 3 para o 2º Trimestre \n",
+      " 4 para o 3º Trimestre \n",
+      "\n",
+      "2\n"
+     ]
+    }
+   ],
+   "source": [
+    "trimestre = input(\"Qual trimestre? \\n\\n 2 para o 1º Trimestre \\n 3 para o 2º Trimestre \\n 4 para o 3º Trimestre \\n\\n\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "2c633ff2",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# selecionando nível do Ensino\n",
+    "navegador.find_element('xpath', '//*[@id=\"nr_periodo\"]').click()\n",
+    "\n",
+    "# Construindo o XPath com a variável\n",
+    "xpath_trimestre = f'//*[@id=\"nr_periodo\"]/option[{trimestre}]'\n",
+    "\n",
+    "navegador.find_element('xpath', xpath_trimestre).click()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 84,
+   "id": "483f71f4",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Encontra o número de alunos em cada turma\n",
+    "alunos = navegador.find_elements(By.ID ,\"id-tabela-faltas\")\n",
+    "#num_alunos = len(n_alunos)\n",
+    "#print(num_turmas)\n",
+    "\n",
+    "# Pega o nome dos alunos\n",
+    "alunes = navegador.find_elements(By.CSS_SELECTOR ,\"span.nomeAluno\")\n",
+    "nomes_alunos=[]\n",
+    "for j in range(0, len(alunes)):\n",
+    "        nome_aluno=alunes[j].text\n",
+    "        nomes_alunos.append(nome_aluno)\n",
+    "nomes_alunos = list(filter(None, nomes_alunos))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 85,
+   "id": "2dd42deb",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Encontra a matrícula de cada aluno\n",
+    "matriculas = []\n",
+    "for j in range(0, len(alunos)):\n",
+    "    aluno = alunos[j]\n",
+    "    matricula_element = aluno.find_element(By.CSS_SELECTOR, \"[id^='vl_nota-']\")\n",
+    "    matricula = matricula_element.get_attribute(\"id\").split(\"-\")[-1]\n",
+    "    matriculas.append(matricula)\n",
+    "#matriculas_por_turma.append(matriculas)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 86,
+   "id": "d9baf802",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Lê o arquivo Excel\n",
+    "notas = pd.read_excel(\"1b2t0.xlsx\", sheet_name=0, header=None, skiprows=15)\n",
+    "\n",
+    "# Remove todas as linhas vazias\n",
+    "notas.dropna(how='all', inplace=True)\n",
+    "\n",
+    "# Converte as notas para uma lista\n",
+    "notas = notas.values.tolist()\n",
+    "\n",
+    "# Acessa a nota do aluno i na posição j\n",
+    "i = 0\n",
+    "j = 0\n",
+    "nota = notas[i][j]\n",
+    "\n",
+    "# Converte as notas para ponto flutuante e depois para string com vírgula\n",
+    "for i in range(len(notas)):\n",
+    "  for j in range(4, 10):\n",
+    "      notas[i][j] = float(notas[i][j])\n",
+    "      notas[i][j] = str(notas[i][j]).replace('.', ',')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 108,
+   "id": "edd4cf57",
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "# aqui você coloca o número do inspecionar elemento\n",
+    "nc = input(\"Número da coluna da verificação parcial\\n\")"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ab973ec8",
+   "metadata": {},
+   "source": [
+    "Verificação Parcial"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 102,
+   "id": "4a4fdca1",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matricula in enumerate(matriculas):\n",
+    "    id_caixa_texto = f\"vl_nota-{nc}-{matricula}\"\n",
+    "    \n",
+    "    try:\n",
+    "        caixa_texto = navegador.find_element(By.ID, id_caixa_texto)\n",
+    "        \n",
+    "        \n",
+    "        # Verifique se a caixa de texto está habilitada para edição\n",
+    "        if caixa_texto.is_enabled():\n",
+    "            caixa_texto.clear()\n",
+    "            caixa_texto.send_keys(str(notas[i][4]))\n",
+    "            \n",
+    "            # Repita o processo para as outras atividades\n",
+    "            \n",
+    "    except NoSuchElementException:\n",
+    "        print(f\"Campo de notas indisponível para a matrícula {matricula}. Pular para a próxima.\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "be9b3fd8",
+   "metadata": {},
+   "source": [
+    "Verificação Global\n",
+    "\n",
+    "//*[@id=\"vl_nota-31601381-30628367\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 103,
+   "id": "ae10a12c",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matricula in enumerate(matriculas):\n",
+    "    id_caixa_texto = f\"vl_nota-{nc+1}-{matricula}\"\n",
+    "    \n",
+    "    try:\n",
+    "        caixa_texto = navegador.find_element(By.ID, id_caixa_texto)\n",
+    "        \n",
+    "        # Verifique se a caixa de texto está habilitada para edição\n",
+    "        if caixa_texto.is_enabled():\n",
+    "            caixa_texto.clear()\n",
+    "            caixa_texto.send_keys(str(notas[i][5]))\n",
+    "            \n",
+    "            # Repita o processo para as outras atividades\n",
+    "            \n",
+    "    except NoSuchElementException:\n",
+    "        print(f\"Campo de notas indisponível para a matrícula {matricula}. Pular para a próxima.\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "89671f2a",
+   "metadata": {},
+   "source": [
+    "Atividade 1\n",
+    "\n",
+    "//*[@id=\"vl_nota-31601382-30628367\"]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 104,
+   "id": "442f958d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matricula in enumerate(matriculas):\n",
+    "    id_caixa_texto = f\"vl_nota-{nc+2}-{matricula}\"\n",
+    "    \n",
+    "    try:\n",
+    "        caixa_texto = navegador.find_element(By.ID, id_caixa_texto)\n",
+    "        \n",
+    "        # Verifique se a caixa de texto está habilitada para edição\n",
+    "        if caixa_texto.is_enabled():\n",
+    "            caixa_texto.clear()\n",
+    "            caixa_texto.send_keys(str(notas[i][6]))\n",
+    "            \n",
+    "            # Repita o processo para as outras atividades\n",
+    "            \n",
+    "    except NoSuchElementException:\n",
+    "        print(f\"Campo de notas indisponível para a matrícula {matricula}. Pular para a próxima.\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "df4cbf4e",
+   "metadata": {},
+   "source": [
+    "Atividade 2\n",
+    "\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 105,
+   "id": "31064381",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matricula in enumerate(matriculas):\n",
+    "    id_caixa_texto = f\"vl_nota-{nc+3}-{matricula}\"\n",
+    "    \n",
+    "    try:\n",
+    "        caixa_texto = navegador.find_element(By.ID, id_caixa_texto)\n",
+    "        \n",
+    "        # Verifique se a caixa de texto está habilitada para edição\n",
+    "        if caixa_texto.is_enabled():\n",
+    "            caixa_texto.clear()\n",
+    "            caixa_texto.send_keys(str(notas[i][7]))\n",
+    "            \n",
+    "            # Repita o processo para as outras atividades\n",
+    "            \n",
+    "    except NoSuchElementException:\n",
+    "        print(f\"Campo de notas indisponível para a matrícula {matricula}. Pular para a próxima.\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "0a52cd1e",
+   "metadata": {},
+   "source": [
+    "Atividade 3"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 106,
+   "id": "33fea2cc",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matricula in enumerate(matriculas):\n",
+    "    id_caixa_texto = f\"vl_nota-{nc+4}-{matricula}\"\n",
+    "    \n",
+    "    try:\n",
+    "        caixa_texto = navegador.find_element(By.ID, id_caixa_texto)\n",
+    "        \n",
+    "        # Verifique se a caixa de texto está habilitada para edição\n",
+    "        if caixa_texto.is_enabled():\n",
+    "            caixa_texto.clear()\n",
+    "            caixa_texto.send_keys(str(notas[i][8]))\n",
+    "            \n",
+    "            # Repita o processo para as outras atividades\n",
+    "            \n",
+    "    except NoSuchElementException:\n",
+    "        print(f\"Campo de notas indisponível para a matrícula {matricula}. Pular para a próxima.\")\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "d28b3604",
+   "metadata": {},
+   "source": [
+    "Atividade 4"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 107,
+   "id": "c4e6d0fd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "for i, matricula in enumerate(matriculas):\n",
+    "    id_caixa_texto = f\"vl_nota-{nc+5}-{matricula}\"\n",
+    "    \n",
+    "    try:\n",
+    "        caixa_texto = navegador.find_element(By.ID, id_caixa_texto)\n",
+    "        \n",
+    "        # Verifique se a caixa de texto está habilitada para edição\n",
+    "        if caixa_texto.is_enabled():\n",
+    "            caixa_texto.clear()\n",
+    "            caixa_texto.send_keys(str(notas[i][9]))\n",
+    "            \n",
+    "            # Repita o processo para as outras atividades\n",
+    "            \n",
+    "    except NoSuchElementException:\n",
+    "        print(f\"Campo de notas indisponível para a matrícula {matricula}. Pular para a próxima.\")\n"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 74,
+   "id": "5e625eec",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "navegador.find_element('xpath', '//*[@id=\"div-matricula-registro-nota\"]/div[3]/div/label').click()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 75,
+   "id": "87b04fce",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "navegador.find_element('xpath', '//*[@id=\"btnPositivo\"]').click()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "711e3123",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "da161c9e",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
